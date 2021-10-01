@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class CustomerController extends Controller
 {
@@ -15,6 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
+
         return view('customers.index', compact('customers'));
     }
 
@@ -23,9 +25,27 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('customers.create');
+        $method = 'GET';
+
+        $zipcode = $request->input('zipcode');
+        $url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=' . $zipcode;
+
+        $client = new Client();
+
+        try {
+            $response = $client->request($method, $url);
+            $body = $response->getBody();
+            $customer = json_decode($body, false);
+            $results = $customer->results[0];
+            $address = $results->address1 . $results->address2 . $results->address3;
+        } catch (\Throwable $th) {
+            return back();
+        }
+
+        
+        return view('customers.create')->with(compact('customer', 'address'));
     }
 
     /**
@@ -68,7 +88,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        return view('customers.edit');
+        return view('customers.edit', compact('customer'));
     }
 
     /**
@@ -104,5 +124,10 @@ class CustomerController extends Controller
         $customer->delete();
         
         return redirect()->route('customers.index');
+    }
+
+    public function zipcode(Customer $customer)
+    {
+        return view('customers.zipcode');
     }
 }

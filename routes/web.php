@@ -19,4 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/customers/zipcode', [CustomerController::class, 'zipcode']);
+
 Route::resource('/customers', CustomerController::class);

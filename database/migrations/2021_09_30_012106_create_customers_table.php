@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->text('address');
             $table->string('telephone');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
