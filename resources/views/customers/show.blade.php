@@ -14,7 +14,7 @@
                 <th>電話番号</th>
             </tr>
             <tr>
-                <th><a href="{{ route('customers.show', $customer) }}">{{ $customer->id }}</a></th>
+                <th>{{ $customer->id }}</th>
                 <th>{{ $customer->name }}</th>
                 <th>{{ $customer->email }}</th>
                 <th>{{ $customer->zipcode }}</th>

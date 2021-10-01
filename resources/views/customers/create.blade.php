@@ -15,11 +15,11 @@
         </p>
         <p>
             <label for="zipcode">郵便番号</label>
-            <input type="text" name="zipcode" value="{{ old('zipcode') }}">
+            <input type="text" name="zipcode" value="{{ $customer->results[0]->zipcode }}">
         </p>
         <p>
             <label for="address">住所</label>
-            <textarea name="address" id="address" cols="30" rows="10">{{ old('address') }}</textarea>
+            <textarea name="address" id="address" cols="30" rows="10">{{ $address }}</textarea>
         </p>
         <p>
             <label for="telephone">電話番号</label>
@@ -27,5 +27,5 @@
         </p>
         <input type="submit" value="登録">
     </form>
-    <button onclick="location.href='/customers'">一覧に戻る</button>
+    <button onclick="location.href='/customers/zipcode'">郵便番号検索画面に戻る</button>
 @endsection

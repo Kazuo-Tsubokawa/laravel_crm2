@@ -44,7 +44,6 @@ class CustomerController extends Controller
             return back();
         }
 
-        
         return view('customers.create')->with(compact('customer', 'address'));
     }
 
@@ -100,8 +99,6 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $customer = new Customer();
-
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->zipcode = $request->zipcode;
@@ -122,7 +119,7 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->delete();
-        
+
         return redirect()->route('customers.index');
     }
 
